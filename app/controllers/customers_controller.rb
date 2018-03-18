@@ -2,7 +2,8 @@ class CustomersController < ApplicationController
 before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
   def index
-    @customers = Customer.page(params[:page])
+    @q = Customer.includes(:post, :company).ransack(params[:q])
+    @customers = @q.result.page(params[:page])
   end
 
   def new
@@ -44,7 +45,7 @@ before_action :set_customer, only: [:show, :edit, :update, :destroy]
   end
 
   def customer_params
-    params.require(:customer).permit(:family_name, :given_name, :email, :company_id
+    params.require(:customer).permit(:family_name, :given_name, :email, :company_id, :post_id, :post_id
     )
   end
 end
