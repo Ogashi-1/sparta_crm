@@ -1,4 +1,5 @@
 class CustomersController < ApplicationController
+before_action :authenticate_user!
 before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -31,6 +32,8 @@ before_action :set_customer, only: [:show, :edit, :update, :destroy]
   end
 
   def show
+    @comment = Comment.new
+    @comments = @customer.comments
   end
 
   def destroy
